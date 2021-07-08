@@ -1,28 +1,43 @@
-def area(arr):
-    return f"a*b={arr[0]*arr[1]}"
+import tkinter as tk
+from typing import Sequence
 
-square = {"a":5,"b":6,"func":area}
+def area():
+    print("hello from func1")
+
+square = ['size A','size B',area]
 
 
 
-class Detail:
+class Detail(tk.Tk):
     def __init__(self,unit):
-        args = list(unit.values())
-        self.func_args = args[:-1]
-        self.func = args[len(args)-1]
+        super().__init__()
+        self.inputs = unit[:-1]
+        self.func = unit[len(unit)-1]
+
+        self.geometry("200x200")
+        self.title("jojo")
+
+        func_args =[]
+        for item in self.inputs: 
+            tk.Label(self, text=item).pack(side=tk.TOP, fill=tk.X)
+            tk.Entry().pack(side=tk.TOP, fill=tk.X)
+
+
 
     def val_returner(self):
-        return self.func(self.func_args)
+        return self.func()
 
-
-
-
-sq1 = Detail(square)
-
-print(sq1.val_returner())
+    def run(self):
+        self.mainloop()
+        
 
 
 
 
 
+
+if __name__ == "__main__":
+    calculator = Detail(square)
+    calculator.run()
+    calculator.val_returner()
 
