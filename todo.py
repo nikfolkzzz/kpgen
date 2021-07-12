@@ -46,6 +46,14 @@ class Todo(tk.Tk):
 
 
         self.bind("<Return>",self.add_task)
+        self.bind("<Configure>", self.on_frame_configure)
+        self.bind_all("<MouseWheel>", self.mouse_scroll)
+        self.bind_all("<Button-4>", self.mouse_scroll)
+        self.bind_all("<Button-5>", self.mouse_scroll)
+        self.tasks_canvas.bind("<Configure>", self.task_width)
+
+
+
         self.colour_schemes = [{"bg":"lightgray", "fg":"black"}, {"bg":"grey", "fg":"white"}]
         
         
@@ -64,7 +72,21 @@ class Todo(tk.Tk):
             new_task.configure(my_scheme_choice['bg'])
             new_task.configure(my_scheme_choice['fg'])
             new_task.pack(side=tk.TOP,fill=tk.X)
+            # в массив с тудушками складывается не текст а виджет Label
             self.tasks.append(new_task)
+
+    def remove_task(self, event): 
+        task = event.widget
+        # widget.bind(event,handler)
+        # event.widget достали виджет из хэндлера 
+
+        if msg.askyesno("really delete", f"delete {task.cget} ?"):
+            self.tasks.remove(event.widget)
+            event.widget.destroy()
+            self.recolour_tasks()
+    
+
+
 
     def run(self):
         self.mainloop()
