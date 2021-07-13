@@ -14,7 +14,13 @@ class Todo(tk.Tk):
         self.geometry("300x400")
         
         self.tasks_canvas = tk.Canvas(self)
+        # Канвас используется для скролинга 
+
         self.task_frame = tk.Frame(self.tasks_canvas)
+        
+        # фрэйм нужен чтоб группировать другие виджеты 
+        # фрэйм позволяет скролить тудушки не влияя на текстовое поле 
+
         self.task_text = tk.Frame(self)
         self.scrollbar = tk.Scrollbar(self.tasks_canvas, orient="vertical", command=self.tasks_canvas.yview)
         self.tasks_canvas.configure(yscrollcommand=self.scrollbar.set)
@@ -80,13 +86,44 @@ class Todo(tk.Tk):
         # widget.bind(event,handler)
         # event.widget достали виджет из хэндлера 
 
-        if msg.askyesno("really delete", f"delete {task.cget} ?"):
+        if msg.askyesno("really delet?"):
             self.tasks.remove(event.widget)
             event.widget.destroy()
             self.recolour_tasks()
     
+    def recolour_tasks(self): 
+        for index , task in enumerate(self.tasks): 
+            self.set_task_colour(index, task)
+
+    def set_task_colour(self, position, task): 
+        _, task_style_choose = divmod(position,2)
+
+        my_scheme_choice = self.colour_schemes[task_style_choose]
+
+        task.configure(bg=my_scheme_choice['bg'])
+        task.configure(fg=my_scheme_choice['fg'])
+
+    def on_frame_configure(self, event=None):
+        self.tasks_canvas.configure(scrollregion=self.tasks_canvas.bbox("all"))
+    
+    def task_width(self,event): 
+        canvas_width = event.width 
+        self.tasks_canvas.itemconfig(self.canvas_frame, width = canvas_width)
 
 
+    def mouse_scroll(self, event): 
+        if event.delta: 
+            self.tasks_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        # если есть изменения в значении скрола, то в метод изменения скролинга передаем цифры 
+
+        else: 
+            if event.num == 5: 
+                move = 1
+
+            else:
+                 move = -1 
+
+            self.tasks_canvas.yview_scroll(move,"units")
 
     def run(self):
         self.mainloop()
