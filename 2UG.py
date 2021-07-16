@@ -18,13 +18,14 @@ shapes = [
 #
 
 
-class Detail(tk.Tk):
+class Detail(tk.Frame):
     # принимает массив с названиями параметров и названием функции. Метод func возвращает строку которую нужно будет вставить в ткп 
-    def __init__(self,arr):
-        super().__init__()
+    def __init__(self,master,arr):
+        super().__init__(master)
         self.name = arr[0]
-        self.geometry('300x300')
-        self.title(f'{self.name}')
+        # self.geometry('300x300')
+        # self.title(f'{self.name}')
+        tk.Label(self,bg='yellow', text=self.name).pack()
         self.labels = arr[1:-1]
         self.widget_entrs = []
         self.detail_function = eval(arr[len(arr)-1] )
@@ -53,11 +54,13 @@ class Detail(tk.Tk):
 class Details(tk.Tk):
     def __init__(self,arr):
         super().__init__()
+        self.arr = arr
+        for d in self.arr: 
+            Detail(self,d).pack()
 
-        self.detail_frame = tk.Frame(self)
 
-
-
+    def run(self): 
+        self.mainloop()
 
 
 
@@ -70,8 +73,8 @@ class Details(tk.Tk):
 
 
 if __name__ == "__main__":
-    rectangular = Detail(shapes[0])
-    rectangular.mainloop()
+    b = Details(shapes)
+    b.mainloop()
 # https://stackoverflow.com/questions/17466561/best-way-to-structure-a-tkinter-application
 # class Navbar(tk.Frame): ...
 # class Toolbar(tk.Frame): ...
