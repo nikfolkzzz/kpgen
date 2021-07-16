@@ -10,25 +10,34 @@ class Todo(tk.Tk):
         else: 
             self.tasks = tasks
 
-        self.title("Todo app v2")
-        self.geometry("300x400")
         
         self.tasks_canvas = tk.Canvas(self)
-        # Канвас используется для скролинга 
 
-        self.task_frame = tk.Frame(self.tasks_canvas)
+        self.tasks_frame = tk.Frame(self.tasks_canvas)
+        self.text_frame = tk.Frame(self)
         
-        # фрэйм нужен чтоб группировать другие виджеты 
-        # фрэйм позволяет скролить тудушки не влияя на текстовое поле 
-
-        self.task_text = tk.Frame(self)
         self.scrollbar = tk.Scrollbar(self.tasks_canvas, orient="vertical", command=self.tasks_canvas.yview)
+
         self.tasks_canvas.configure(yscrollcommand=self.scrollbar.set)
 
+        self.title("Todo app v2")
+        self.geometry("300x400")
 
+        self.task_create = tk.Text(self.text_frame, height=3, bg='#fff', fg='black') 
 
+        self.tasks_canvas.pack(side= tk.TOP, fill = tk.BOTH, expand = 1)
 
-        todo1 = tk.Label(self,text="--- add items here---", bg='lightgray',fg="black",pady=10)
+        self.scrollbar.pack(side=tk.RIGHT, fill = tk.Y)
+
+        self.canvas_frame = self.tasks_canvas.create_window((0,0), window= self.tasks_frame, anchor = 'n')
+
+        self.task_create.pack(side=tk.BOTTOM,fill = tk.X)
+
+        self.text_frame.pack(side = tk.BOTTOM, fill =tk.X)
+        self.task_create.focus_set()
+
+        todo1 = tk.Label(self.tasks_frame, text="--- add items here---", bg='lightgrey',fg="black",pady=10)
+
         todo1.bind("<Button-1>",self.remove_task)
 
 
@@ -37,15 +46,8 @@ class Todo(tk.Tk):
         for task in self.tasks: 
             task.pack(side=tk.TOP,fill=tk.X)
 
-        self.task_create = tk.Text(self, height=5, bg='#fff', fg='black') 
-        self.task_create.pack(side=tk.BOTTOM,fill = tk.X)
 
-        self.tasks_canvas.pack(side= tk.TOP, fill = tk.BOTH, expand = 1)
-        self.scrollbar.pack(side=tk.RIGHT, fill = tk.Y)
 
-        self.canvas_frame = self.tasks_canvas.create_window((0,0), window= self.task_frame, anchor = 'n')
-        self.task_frame.pack(side = tk.BOTTOM, fill =tk.X)
-        self.task_create.focus_set()
 
 
 
@@ -60,7 +62,7 @@ class Todo(tk.Tk):
 
 
 
-        self.colour_schemes = [{"bg":"lightgray", "fg":"black"}, {"bg":"grey", "fg":"white"}]
+        self.colour_schemes = [{"bg":"grey","fg": "white"},{"bg":"lightgrey", "fg":"black"}]
         
         
 
@@ -68,18 +70,14 @@ class Todo(tk.Tk):
         # put in variable inner text from text area (tk.Text())
         task_text = self.task_create.get(1.0,tk.END).strip()
         if len(task_text) > 0: 
-            new_task = tk.Label(self, text = task_text,pady=10)
-            # создаем массив в () чтобы по разному поочередно окрашивать задачи в тудушке
-
-            # подчеркиванием игнорируется первое значение в divmod и переменной присваивается 0 или 1 чтобы окрашивать таску
-            _, task_style_choice = divmod(len(self.tasks),2)
-            # как я понял красим четные не четные 
-            my_scheme_choice = self.colour_schemes[task_style_choice]
-            new_task.configure(my_scheme_choice['bg'])
-            new_task.configure(my_scheme_choice['fg'])
+            new_task = tk.Label(self.tasks_frame, text = task_text,pady=10)
+            self.set_task_colour(len(self.tasks),new_task)
+            new_task.bind("<Button-1>",self.remove_task)
             new_task.pack(side=tk.TOP,fill=tk.X)
-            # в массив с тудушками складывается не текст а виджет Label
             self.tasks.append(new_task)
+        
+        self.task_create.delete(1.0 , tk.END)
+
 
     def remove_task(self, event): 
         task = event.widget
