@@ -1,43 +1,46 @@
-import tkinter as tk
-from typing import Sequence
+import tkinter as tk 
 
-def area():
-    print("hello from func1")
+from calc_functions import *
 
-square = ['size A','size B',area]
+class Detail(tk.Frame):
 
+    # принимает массив с названиями параметров и названием функции. Метод func возвращает строку которую нужно будет вставить в ткп 
 
-
-class Detail(tk.Tk):
-    def __init__(self,unit):
-        super().__init__()
-        self.inputs = unit[:-1]
-        self.func = unit[len(unit)-1]
-
-        self.geometry("200x200")
-        self.title("jojo")
-
-        func_args =[]
-        for item in self.inputs: 
-            tk.Label(self, text=item).pack(side=tk.TOP, fill=tk.X)
-            tk.Entry().pack(side=tk.TOP, fill=tk.X)
+    def __init__(self,master,arr):
+        super().__init__(master)
+        self.name = arr[0]
+        tk.Label(self,bg='lightblue',font=("Times New Roman", 16), text=self.name).pack()
+        self.labels = arr[1:-1]
+        self.widget_entrs = []
+        self.detail_function = eval(arr[len(arr)-1] )
 
 
 
-    def val_returner(self):
-        return self.func()
+
+
+        
+        for label in self.labels:
+            tk.Label(self,text=label , bg='#fff').pack(side=tk.TOP)
+            en = tk.Entry(self)
+            self.widget_entrs.append(en)
+            en.pack(side=tk.TOP)
+
+    def collect_calculable_args(self,arr):
+        args = []
+        for item in arr:
+            args.append(int(item.get()))
+        return args
+
+    def func(self, event = None):
+        args = self.collect_calculable_args(self.widget_entrs)
+        print(self.detail_function(args))
 
     def run(self):
-        self.mainloop()
-        
+      self.mainloop()
 
 
+# how test this??
 
-
-
-
-if __name__ == "__main__":
-    calculator = Detail(square)
-    calculator.run()
-    calculator.val_returner()
-
+# if __name__ == '__main__':
+#   d = Detail(['jojo','age','favorite_cace'])
+#   d.run()
