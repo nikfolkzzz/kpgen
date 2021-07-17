@@ -25,7 +25,7 @@ class Detail(tk.Frame):
         self.name = arr[0]
         # self.geometry('300x300')
         # self.title(f'{self.name}')
-        tk.Label(self,bg='yellow', text=self.name).pack()
+        tk.Label(self,bg='lightblue',font=("Times New Roman", 16), text=self.name).pack()
         self.labels = arr[1:-1]
         self.widget_entrs = []
         self.detail_function = eval(arr[len(arr)-1] )
@@ -54,9 +54,12 @@ class Detail(tk.Frame):
 class Details(tk.Tk):
     def __init__(self,arr):
         super().__init__()
+        self.geometry('500x500')
+
+
         self.arr = arr
         for d in self.arr: 
-            Detail(self,d).pack()
+            Detail(self,d).pack(pady=20)
 
 
     def run(self): 
@@ -75,21 +78,3 @@ class Details(tk.Tk):
 if __name__ == "__main__":
     b = Details(shapes)
     b.mainloop()
-# https://stackoverflow.com/questions/17466561/best-way-to-structure-a-tkinter-application
-# class Navbar(tk.Frame): ...
-# class Toolbar(tk.Frame): ...
-# class Statusbar(tk.Frame): ...
-# class Main(tk.Frame): ...
-
-# class MainApplication(tk.Frame):
-#     def __init__(self, parent, *args, **kwargs):
-#         tk.Frame.__init__(self, parent, *args, **kwargs)
-#         self.statusbar = Statusbar(self, ...)
-#         self.toolbar = Toolbar(self, ...)
-#         self.navbar = Navbar(self, ...)
-#         self.main = Main(self, ...)
-
-#         self.statusbar.pack(side="bottom", fill="x")
-#         self.toolbar.pack(side="top", fill="x")
-#         self.navbar.pack(side="left", fill="y")
-#         self.main.pack(side="right", fill="both", expand=True)
