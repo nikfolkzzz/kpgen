@@ -1,4 +1,5 @@
-import tkinter as tk 
+import tkinter as tk
+from tkinter.constants import TRUE 
 
 from calc_functions import *
 
@@ -21,7 +22,7 @@ class Detail(tk.Frame):
         
         for label in self.labels:
             tk.Label(self,text=label , bg='#fff').pack(side=tk.TOP)
-            en = tk.Entry(self)
+            en = tk.Entry(self, validate='key' ,validatecommand = (self.register(self.validate_inp),'%P'))
             self.widget_entrs.append(en)
             en.pack(side=tk.TOP)
 
@@ -34,6 +35,13 @@ class Detail(tk.Frame):
     def func(self, event = None):
         args = self.collect_calculable_args(self.widget_entrs)
         print(self.detail_function(args))
+
+    def validate_inp(self, input): 
+        try:
+            x = int(input)
+            return True
+        except ValueError:
+            return False
 
     def run(self):
       self.mainloop()

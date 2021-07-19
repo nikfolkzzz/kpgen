@@ -1,4 +1,5 @@
-import tkinter as tk 
+import tkinter as tk
+from tkinter.constants import VERTICAL 
 from Detail import Detail
 import os
 
@@ -6,12 +7,9 @@ shapes = [
 
     ['circle','radius','calc_circle_area'],
     ['rectangular', 'width', 'height','calc_rectangular_area'],
-    ['rectangular', 'width', 'height','calc_rectangular_area'],
-    ['rectangular', 'width', 'height','calc_rectangular_area'],
-    ['rectangular', 'width', 'height','calc_rectangular_area'],
-    ['rectangular', 'width', 'height','calc_rectangular_area'],
-    ['rectangular', 'width', 'height','calc_rectangular_area'],
-    ['rectangular', 'width', 'height','calc_rectangular_area'],
+    ['гибкая вставка ', 'L', 'D','calc_rectangular_area'],
+ 
+ 
 
     ]
 
@@ -20,30 +18,30 @@ class Details(tk.Tk):
         super().__init__()
         self.arr = arr
         self.all_details = []
-
-
-        self.form_canvas = tk.Canvas(self)
-
-        self.form_frame = tk.Frame(self.form_canvas)
-
-
-        self.scrollbar = tk.Scrollbar(self.form_canvas, orient='vertical', command=self.form_canvas.yview)
-
-        self.form_canvas.configure(yscrollcommand=self.scrollbar.set)
-
         self.geometry('500x500')
 
-        self.form_canvas.pack(side=tk.TOP , fill=tk.BOTH ,expand=1)
-        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        self.form_frame.pack(side=tk.BOTTOM, fill=tk.X , expand=1)
 
-        self.bind_all("<MouseWheel>", self.mouse_scroll)
+        self.form_frame = tk.Frame(self)
+        self.form_frame.pack(fill=tk.BOTH, expand=1)
 
-        self.canvas_frame = self.form_canvas.create_window((100, 0), window=self.form_frame, anchor="n")
+        self.form_canvas = tk.Canvas(self.form_frame)
+        self.form_canvas.pack(side=tk.LEFT, fill= tk.BOTH , expand=1)
+
+        self.scrollbar = tk.Scrollbar(self.form_canvas, orient=VERTICAL, command=self.form_canvas.yview)
+        self.scrollbar.pack(side=tk.RIGHT, fill= tk.Y)
+
+        self.form_canvas.configure(yscrollcommand=self.scrollbar.set)
+        self.form_canvas.bind('<Configure>', lambda e: self.form_canvas.configure(scrollregion=self.form_canvas.bbox("all")))
+
+        self.second_frame = tk.Frame(self.form_canvas)
+
+        self.form_canvas.create_window((0,0), window=self.second_frame, anchor='nw')
+
+
 
 
         for d in self.arr: 
-            detail = Detail(self.form_frame,d)
+            detail = Detail(self.second_frame,d)
             self.all_details.append(detail)
             detail.pack(pady=10)
 
@@ -60,19 +58,7 @@ class Details(tk.Tk):
     def run(self): 
         self.mainloop()
 
-    def mouse_scroll(self, event): 
-        if event.delta: 
-            self.form_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-        # если есть изменения в значении скрола, то в метод изменения скролинга передаем цифры 
 
-        else: 
-            if event.num == 5: 
-                move = 1
-
-            else:
-                 move = -1 
-
-            self.form_canvas.yview_scroll(move,"units")
 
 if __name__ == "__main__":
     b = Details(shapes)
