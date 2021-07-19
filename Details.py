@@ -8,10 +8,16 @@ shapes = [
     ['circle','radius','calc_circle_area'],
     ['rectangular', 'width', 'height','calc_rectangular_area'],
     ['гибкая вставка ', 'L', 'D','calc_rectangular_area'],
- 
- 
 
-    ]
+     ]
+
+
+dogs= [ 
+        ["boc", 'red', 'tail', 'test_func'], 
+        ["boc", 'red', 'tail', 'test_func'],
+        ["boc", 'red', 'tail', 'test_func'],
+        ["boc", 'red', 'tail', 'test_func'],
+]
 
 class Details(tk.Tk):
     def __init__(self,arr):
@@ -50,6 +56,9 @@ class Details(tk.Tk):
         self.btn.bind("<Button-1>", self.calc_all_forms)
         self.btn.pack(side=tk.TOP,)
 
+        
+
+
 
     def calc_all_forms(self,evt = None):
         for d in self.all_details: 
@@ -61,5 +70,5 @@ class Details(tk.Tk):
 
 
 if __name__ == "__main__":
-    b = Details(shapes)
+    b = Details(dogs)
     b.mainloop()
