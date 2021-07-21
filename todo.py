@@ -10,22 +10,25 @@ class Todo(tk.Tk):
         else: 
             self.tasks = tasks
 
-        
-        self.tasks_canvas = tk.Canvas(self)
-
-        self.tasks_frame = tk.Frame(self.tasks_canvas)
-        self.text_frame = tk.Frame(self)
-        
-        self.scrollbar = tk.Scrollbar(self.tasks_canvas, orient="vertical", command=self.tasks_canvas.yview)
-
-        self.tasks_canvas.configure(yscrollcommand=self.scrollbar.set)
-
         self.title("Todo app v2")
         self.geometry("300x400")
+        
+        self.tasks_canvas = tk.Canvas(self)
+        self.tasks_canvas.pack(side= tk.TOP, fill = tk.BOTH, expand = 1)
+
+        self.tasks_frame = tk.Frame(self.tasks_canvas)
+
+        self.scrollbar = tk.Scrollbar(self.tasks_canvas, orient="vertical", command=self.tasks_canvas.yview)
+
+
+        self.text_frame = tk.Frame(self)
+        
+        self.tasks_canvas.configure(yscrollcommand=self.scrollbar.set)
+
+
 
         self.task_create = tk.Text(self.text_frame, height=3, bg='#fff', fg='black') 
 
-        self.tasks_canvas.pack(side= tk.TOP, fill = tk.BOTH, expand = 1)
 
         self.scrollbar.pack(side=tk.RIGHT, fill = tk.Y)
 
