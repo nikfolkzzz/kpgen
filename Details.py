@@ -8,25 +8,12 @@ from tkinter.ttk import Notebook
 
 
 
-class Details(tk.Tk):
-    def __init__(self,arr):
-        super().__init__()
+class Details(tk.Frame):
+    def __init__(self,master,arr):
+        super().__init__(master)
         self.arr = arr
         self.all_details = []
-        self.geometry('500x500')
-
-        self.notebook = Notebook(self)
-        self.notebook.pack(pady= 20 )
-
-        self.shapes_frame  = tk.Frame(self.notebook , bg='red')
-        self.dogs_frame = tk.Frame(self.notebook, bg='blue')
-
-        self.shapes_frame.pack(fill=tk.BOTH , expand=1 )
-        self.dogs_frame.pack(fill=tk.BOTH , expand=1 )
-
-        self.notebook.add(self.shapes_frame , text = 'shapes')
-        self.notebook.add(self.dogs_frame, text = 'dogs')
-
+        # self.geometry('500x500')
 
         self.form_canvas = tk.Canvas(self,bg='lightgreen')
         self.form_canvas.pack(side=tk.LEFT, fill= tk.BOTH , expand=1)
@@ -89,8 +76,15 @@ class Details(tk.Tk):
                 self.form_canvas.yview_scroll(move,"units")
 
     def calc_all_forms(self,evt = None):
-        for d in self.all_details: 
-            d.func()
+
+        try:
+            for d in self.all_details: 
+                d.func()
+
+        except ValueError: 
+            print('enter data please')
+
+
     def on_frame_configure(self, event=None):
       self.form_canvas.configure(scrollregion=self.form_canvas.bbox("all"))    
 
