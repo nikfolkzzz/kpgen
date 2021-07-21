@@ -29,8 +29,8 @@ class ScrollBtn(tk.Tk):
 
     for i in range(100):
       btn = tk.Button(self.main_frame, text=f'hello btn {i}')
-      # btn.grid(row=i, column=0)
-      btn.pack(fill=tk.X)
+      btn.grid(row=i, column=0)
+      # btn.pack(fill=tk.X)
 
 
   def task_width(self,e): 
