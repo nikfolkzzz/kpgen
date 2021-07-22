@@ -10,7 +10,7 @@ class Detail(tk.Frame):
     def __init__(self,master,arr):
         super().__init__(master)
         self.name = arr[0]
-        tk.Label(self,bg='lightblue',font=("Times New Roman", 16), text=self.name).pack()
+        tk.Label(self,font=("Times New Roman", 16), text=self.name).pack()
         self.labels = arr[1:-1]
         self.widget_entrs = []
         self.detail_function = eval(arr[len(arr)-1] )
@@ -21,8 +21,9 @@ class Detail(tk.Frame):
 
         
         for label in self.labels:
-            tk.Label(self,text=label , bg='#fff').pack(side=tk.TOP)
-            en = tk.Entry(self, validate='key' ,validatecommand = (self.register(self.validate_inp),'%P'))
+            self.elem_name = tk.Label(self,text=label )
+            self.elem_name.pack(side=tk.TOP)
+            en = tk.Entry(self.elem_name, validate='key' ,validatecommand = (self.register(self.validate_inp),'%P'))
             self.widget_entrs.append(en)
             en.pack(side=tk.TOP)
 
