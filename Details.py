@@ -78,8 +78,30 @@ class Details(tk.Tk):
                 self.form_canvas.yview_scroll(move,"units")
 
     def calc_all_forms(self,evt = None):
+        # https://pypi.org/project/htmltabletomd/ - html to md 
+        table_strings = []
+
         for d in self.all_details: 
-            d.func()
+            table_strings.append(d.func())
+
+        table_strings_formated = ','.join(table_strings)
+        table = f'''
+            <table> 
+                <tr>
+                    <td> my fav table <td> 
+                </tr> 
+                {table_strings_formated}
+
+            </table>
+        
+         '''
+        with open('table.txt','a', encoding='utf-8') as tb:
+            print(table, file=tb)
+
+
+
+
+
     def on_frame_configure(self, event=None):
       self.form_canvas.configure(scrollregion=self.form_canvas.bbox("all"))    
 

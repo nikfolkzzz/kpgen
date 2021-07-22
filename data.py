@@ -1,8 +1,8 @@
 shapes = [
 
     ['circle','radius','calc_circle_area'],
-    # ['rectangular', 'width', 'height','calc_rectangular_area'],
-    # ['гибкая вставка ', 'L', 'D','calc_rectangular_area'],
+    ['rectangular', 'width', 'height','calc_rectangular_area',],
+    ['гибкая вставка ', 'L', 'D','calc_rectangular_area'],
 
      ]
 

@@ -1,0 +1,10 @@
+
+            <table> 
+                <tr>
+                    <td> my fav table <td> 
+                </tr> 
+                circle area : 25.12,площадь квадрата = 12,площадь квадрата = 16
+
+            </table>
+        
+         

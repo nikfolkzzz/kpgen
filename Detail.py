@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter.constants import TRUE 
+from tkinter.constants import LEFT, TRUE 
+import os 
 
 from calc_functions import *
 
@@ -21,11 +22,11 @@ class Detail(tk.Frame):
 
         
         for label in self.labels:
-            self.elem_name = tk.Label(self,text=label )
-            self.elem_name.pack(side=tk.TOP)
-            en = tk.Entry(self.elem_name, validate='key' ,validatecommand = (self.register(self.validate_inp),'%P'))
-            self.widget_entrs.append(en)
+            label_name =  tk.Label(self,text=label)
+            en = tk.Entry(self, validate='key' ,validatecommand = (self.register(self.validate_inp),'%P'))
+            label_name.pack(side=tk.TOP)
             en.pack(side=tk.TOP)
+            self.widget_entrs.append(en)
 
     def collect_calculable_args(self,arr):
         args = []
@@ -35,7 +36,16 @@ class Detail(tk.Frame):
 
     def func(self, event = None):
         args = self.collect_calculable_args(self.widget_entrs)
-        print(self.detail_function(args))
+        calculated_string = self.detail_function(args)
+        return calculated_string
+
+        # print(calculated_string)
+
+        # with open('table.txt','a',encoding='utf-8') as tb: 
+        #     print(f'{calculated_string}', file = tb, )
+            
+
+        
 
     def validate_inp(self, input): 
         try:
