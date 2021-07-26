@@ -82,20 +82,15 @@ class Details(tk.Tk):
         table_strings = []
 
         for d in self.all_details: 
-            table_strings.append(d.func())
+            
+            table_strings.append(f'{d.func()}\n')
 
         table_strings_formated = ','.join(table_strings)
         table = f'''
-            <table> 
-                <tr>
-                    <td> my fav table <td> 
-                </tr> 
-                {table_strings_formated}
-
-            </table>
+            {table_strings_formated}
         
          '''
-        with open('table.txt','a', encoding='utf-8') as tb:
+        with open('table.txt','w', encoding='utf-8') as tb:
             print(table, file=tb)
 
 

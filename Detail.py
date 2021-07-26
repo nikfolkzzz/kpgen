@@ -32,11 +32,12 @@ class Detail(tk.Frame):
         args = []
         for item in arr:
             args.append(int(item.get()))
-        return args
+        return args 
 
     def func(self, event = None):
         args = self.collect_calculable_args(self.widget_entrs)
-        calculated_string = self.detail_function(args)
+        calculated_string = self.detail_function(args,self.name)
+        # в функцию создающую строку с вычеслениями передавать аргументы в массиве и название рачсета "self.name"
         return calculated_string
 
         # print(calculated_string)

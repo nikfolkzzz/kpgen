@@ -1,12 +1,25 @@
+
+
+
+# БК-182448
+
+
+
+
 shapes = [
 
-    ['circle','radius','calc_circle_area'],
-    ['rectangular', 'width', 'height','calc_rectangular_area',],
-    ['гибкая вставка ', 'L', 'D','calc_rectangular_area'],
+# ['прижимная планка', 'amax' , 'bmax', 'amin', 'bmin', 'толщина', 'rect_flange'], 
+['БК-182413', 'A', 'B', 'L', 'C','rect_fej'], 
+['БК-182411', 'A', 'B', 'L', 'C','rect_fej'], 
+['БК-183412', 'A', 'B', 'L', 'C','rect_fej'], 
+['БК-182414', 'A', 'B', 'L', 'C','rect_fej'], 
+['БК-182450', 'A', 'B', 'L', 'C','rect_fej'], 
+['БК-182451', 'A', 'B', 'L', 'C','rect_fej'], 
+['БК-182449', 'A', 'B', 'L', 'C','rect_fej'], 
+['БК-182448', 'D', 'высота фланца', 'L', 'circ_fej'], 
+
 
      ]
-
-
 dogs= [ 
         ["boc", 'red', 'tail', 'test_func'], 
         ["boc", 'red', 'tail', 'test_func'],
