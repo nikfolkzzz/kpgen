@@ -6,25 +6,15 @@
 
 
 
-shapes = [
+rect_2ug = [
 
-# ['прижимная планка', 'amax' , 'bmax', 'amin', 'bmin', 'толщина', 'rect_flange'], 
-['БК-182413', 'A', 'B', 'L', 'C','rect_fej'], 
-['БК-182411', 'A', 'B', 'L', 'C','rect_fej'], 
-['БК-183412', 'A', 'B', 'L', 'C','rect_fej'], 
-['БК-182414', 'A', 'B', 'L', 'C','rect_fej'], 
-['БК-182450', 'A', 'B', 'L', 'C','rect_fej'], 
-['БК-182451', 'A', 'B', 'L', 'C','rect_fej'], 
-['БК-182449', 'A', 'B', 'L', 'C','rect_fej'], 
-['БК-182448', 'D', 'высота фланца', 'L', 'circ_fej'], 
+['гибкая вставка', 'A', 'B', 'EH', 'C','rect_fej'], 
+# ['фланец газохода', 'Amin', 'Bmin', 'thick', 'Amax', 'Bmax' , 'rect_flange'], 
+# ['прижимная планка', 'Amin', 'Bmin', 'thick', 'Amax', 'Bmax' , 'rect_flange'], 
+# ['крепеж','количество крепежа',''] 
+
+
 
 
      ]
-dogs= [ 
-        ["boc", 'red', 'tail', 'test_func'], 
-        ["boc", 'red', 'tail', 'test_func'],
-        ["boc", 'red', 'tail', 'test_func'],
-        ["boc", 'red', 'tail', 'test_func'],
-]
 
-data = {'shapes': shapes, 'dogs': dogs}

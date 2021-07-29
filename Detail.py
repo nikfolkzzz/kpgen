@@ -10,6 +10,7 @@ class Detail(tk.Frame):
 
     def __init__(self,master,arr):
         super().__init__(master)
+
         self.name = arr[0]
         tk.Label(self,font=("Times New Roman", 16), text=self.name).pack()
         self.labels = arr[1:-1]
@@ -36,9 +37,11 @@ class Detail(tk.Frame):
 
     def func(self, event = None):
         args = self.collect_calculable_args(self.widget_entrs)
-        calculated_string = self.detail_function(args,self.name)
+        func_answer = self.detail_function(args,self.name)
+        calculated_string = func_answer['answer']
+        cost = func_answer['cost']
         # в функцию создающую строку с вычеслениями передавать аргументы в массиве и название рачсета "self.name"
-        return calculated_string
+        return func_answer
 
         # print(calculated_string)
 
@@ -54,6 +57,8 @@ class Detail(tk.Frame):
             return True
         except ValueError:
             return False
+
+    
 
     def run(self):
       self.mainloop()

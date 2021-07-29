@@ -9,10 +9,18 @@ from data import *
 class Details(tk.Tk):
     def __init__(self,arr):
         super().__init__()
+
+
         self.arr = arr
         self.all_details = []
         self.geometry('500x500')
         self.profile = 'shapes'
+
+        self.draw_num_label = tk.Label(self, text = 'Номер чертежа квадратного!!! компенсатора', bg='pink')
+        self.draw_num_entry = tk.Entry(self,)
+
+        self.draw_num_label.pack(side=tk.TOP,)
+        self.draw_num_entry.pack(side=tk.TOP,)
 
 
 
@@ -48,11 +56,6 @@ class Details(tk.Tk):
 # 
 # 
 # 
-        self.btn_profile_shapes = tk.Button(self, text= 'shapes', )
-        self.btn_profile_shapes.pack(side=tk.TOP, )
-        
-        self.btn_profile_dogs = tk.Button(self, text= 'dogs', )
-        self.btn_profile_dogs.pack(side=tk.TOP, )
 
 
         self.bind("<Configure>", self.on_frame_configure)
@@ -81,11 +84,18 @@ class Details(tk.Tk):
         # https://pypi.org/project/htmltabletomd/ - html to md 
         table_strings = []
 
-        for d in self.all_details: 
-            
-            table_strings.append(f'{d.func()}\n')
+        draw_name = f'---{self.draw_num_entry.get()}---'
+        table_strings.append(draw_name)
+        all_price = []
 
-        table_strings_formated = ','.join(table_strings)
+        for d in self.all_details: 
+            answer_string = d.func()['answer']
+            one_detail_cost = d.func()['cost']
+            all_price.append(one_detail_cost)
+            table_strings.append(f'{answer_string}\n')
+
+        table_strings.append(f'цена компенсатора по чертежу {draw_name} : {str(sum(all_price))}₽')
+        table_strings_formated = ''.join(table_strings)
         table = f'''
             {table_strings_formated}
         
@@ -106,5 +116,5 @@ class Details(tk.Tk):
 
 
 if __name__ == "__main__":
-    b = Details(data['shapes'])
+    b = Details(rect_2ug)
     b.mainloop()
