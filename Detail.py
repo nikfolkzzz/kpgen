@@ -10,7 +10,7 @@ class Detail(tk.Frame):
 
     def __init__(self,master,arr):
         super().__init__(master)
-
+        self.configure(borderwidth=5, relief="groove", highlightcolor = 'pink' )
         self.name = arr[0]
         tk.Label(self,font=("Times New Roman", 16), text=self.name).pack()
         self.labels = arr[1:-1]
@@ -18,10 +18,6 @@ class Detail(tk.Frame):
         self.detail_function = eval(arr[len(arr)-1] )
 
 
-
-
-
-        
         for label in self.labels:
             label_name =  tk.Label(self,text=label)
             en = tk.Entry(self, validate='key' ,validatecommand = (self.register(self.validate_inp),'%P'))
@@ -40,14 +36,9 @@ class Detail(tk.Frame):
         func_answer = self.detail_function(args,self.name)
         calculated_string = func_answer['answer']
         cost = func_answer['cost']
-        # в функцию создающую строку с вычеслениями передавать аргументы в массиве и название рачсета "self.name"
+
         return func_answer
 
-        # print(calculated_string)
-
-        # with open('table.txt','a',encoding='utf-8') as tb: 
-        #     print(f'{calculated_string}', file = tb, )
-            
 
         
 
@@ -64,8 +55,3 @@ class Detail(tk.Frame):
       self.mainloop()
 
 
-# how test this??
-
-# if __name__ == '__main__':
-#   d = Detail(['jojo','age','favorite_cace'])
-#   d.run()

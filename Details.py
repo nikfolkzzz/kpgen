@@ -48,10 +48,10 @@ class Details(tk.Tk):
             self.all_details.append(detail)
             pos_num = divmod(idx,2)[1]
             if pos_num==0:
-                detail.grid(row=idx, column=0)
+                detail.grid(row=idx, column=0,sticky='ew')
                 print(f'четно')
             else :
-                detail.grid(row=idx-1, column=1)
+                detail.grid(row=idx-1, column=1 ,sticky='ew')
                 print(f'нечетно')
 # 
 # 
