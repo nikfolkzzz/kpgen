@@ -43,11 +43,16 @@ class Details(tk.Tk):
 
         self.canvas_frame = self.form_canvas.create_window((0,0), window=self.form_frame, anchor='nw',)
 
-        for d in self.arr: 
+        for idx, d in enumerate(self.arr): 
             detail = Detail(self.form_frame,d)
             self.all_details.append(detail)
-            detail.pack(pady=10)
-# 
+            pos_num = divmod(idx,2)[1]
+            if pos_num==0:
+                detail.grid(row=idx, column=0)
+                print(f'четно')
+            else :
+                detail.grid(row=idx-1, column=1)
+                print(f'нечетно')
 # 
 # 
         self.btn = tk.Button(self, text='расчет', bg='lightblue',font=("Arial",15))
