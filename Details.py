@@ -84,7 +84,7 @@ class Details(tk.Tk):
         # https://pypi.org/project/htmltabletomd/ - html to md 
         table_strings = []
 
-        draw_name = f'---{self.draw_num_entry.get()}---'
+        draw_name = self.draw_num_entry.get()
         table_strings.append(draw_name)
         all_price = []
 
@@ -100,7 +100,7 @@ class Details(tk.Tk):
             {table_strings_formated}
         
          '''
-        with open('table.txt','w', encoding='utf-8') as tb:
+        with open(f'{draw_name}.txt','w', encoding='utf-8') as tb:
             print(table, file=tb)
 
 

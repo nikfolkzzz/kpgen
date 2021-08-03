@@ -8,7 +8,9 @@ from helpers import rect_fej
 def rect_flange(arr,name): 
     amin, bmin, thick , amax , bmax = arr
     mass = (amax*bmax - amin*bmin)*thick*7850*10**-9
+    mass = round(mass,1)
     cost = mass*700*2
+    cost =round(int(cost),1)
     answer = f'''
     {name}
     масса одного фланца {mass}
@@ -64,7 +66,7 @@ def rect_cflange(arr,name):
 
     return answer
 
-def bolting(arr,name):
+def bolting_calc(arr,name):
     qty = arr[0]
 
     cost = qty *70 
