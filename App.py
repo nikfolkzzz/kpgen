@@ -1,26 +1,31 @@
 import tkinter as tk
 from tkinter.constants import VERTICAL 
 from Detail import Detail
+from DrawMeta import DrawMeta 
 import os
 from data import *
 
 
 
-class Details(tk.Tk):
-    def __init__(self,arr):
-        super().__init__()
 
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__() 
 
-        self.arr = arr
+        self.arr = exp_type['circ']
         self.all_details = []
-        self.geometry('500x500')
-        self.profile = 'shapes'
+        self.geometry('800x600')
 
-        self.draw_num_label = tk.Label(self, text = 'Номер чертежа квадратного!!! компенсатора', bg='pink')
-        self.draw_num_entry = tk.Entry(self,)
+        self.btn_circ = tk.Button(self, text= 'cirlce' , command= lambda : self.refresh('circ'))
+        self.btn_circ.pack()
 
-        self.draw_num_label.pack(side=tk.TOP,)
-        self.draw_num_entry.pack(side=tk.TOP,)
+        self.btn_rect = tk.Button(self, text= 'rect' , command= lambda: self.refresh('rect'))
+        self.btn_rect.pack()
+
+
+        self.draw_meta = DrawMeta(self)
+        self.draw_meta.pack(fill=tk.BOTH)
+
 
 
 
@@ -43,17 +48,8 @@ class Details(tk.Tk):
 
         self.canvas_frame = self.form_canvas.create_window((0,0), window=self.form_frame, anchor='nw',)
 
-        for idx, d in enumerate(self.arr): 
-            detail = Detail(self.form_frame,d)
-            self.all_details.append(detail)
-            pos_num = divmod(idx,2)[1]
-            if pos_num==0:
-                detail.grid(row=idx, column=0,sticky='ew')
-                print(f'четно')
-            else :
-                detail.grid(row=idx-1, column=1 ,sticky='ew')
-                print(f'нечетно')
-# 
+        self.put_details()
+#   
 # 
         self.btn = tk.Button(self, text='расчет', bg='lightblue',font=("Arial",15))
         self.btn.bind("<Button-1>", self.calc_all_forms)
@@ -66,6 +62,34 @@ class Details(tk.Tk):
         self.bind("<Configure>", self.on_frame_configure)
 
         self.bind_all("<MouseWheel>", self.mouse_scroll)    
+
+
+
+    def put_details(self):
+        
+        for idx, d in enumerate(self.arr): 
+            detail = Detail(self.form_frame,d)
+            self.all_details.append(detail)
+            pos_num = divmod(idx,2)[1]
+            if pos_num==0:
+                detail.grid(row=idx, column=0,sticky='s')
+               
+            else :
+                detail.grid(row=idx-1, column=1 ,sticky='n')
+                
+
+
+    def refresh(self,fej_type):
+        self.arr = exp_type[fej_type]
+        print(fej_type)
+
+        all_frames = [f for f in self.all_details]
+        for f_name in all_frames:
+            self.nametowidget(f_name).destroy()
+        self.all_details = []
+        self.put_details()
+        print('все детали',self.all_details)
+
 
 
 
@@ -89,7 +113,7 @@ class Details(tk.Tk):
         # https://pypi.org/project/htmltabletomd/ - html to md 
         table_strings = []
 
-        draw_name = self.draw_num_entry.get()
+        draw_name = self.draw_meta.meta_info()
         table_strings.append(draw_name)
         all_price = []
 
@@ -121,5 +145,5 @@ class Details(tk.Tk):
 
 
 if __name__ == "__main__":
-    b = Details(rect_2ug)
+    b = App()
     b.mainloop()

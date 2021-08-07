@@ -10,9 +10,12 @@ class Detail(tk.Frame):
 
     def __init__(self,master,arr):
         super().__init__(master)
+        self.configure(width=100,height=90)
         self.configure(borderwidth=5, relief="groove", highlightcolor = 'pink' )
-        self.name = arr[0]
-        tk.Label(self,font=("Times New Roman", 16), text=self.name).pack()
+
+        self.name = tk.Label(self,font=("Times New Roman", 16), text=arr[0])
+
+        self.name.pack()
         self.labels = arr[1:-1]
         self.widget_entrs = []
         self.detail_function = eval(arr[len(arr)-1] )
