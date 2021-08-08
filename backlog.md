@@ -1,7 +1,7 @@
 
 
 # 
-
+place holder for entrys https://www.youtube.com/watch?v=ZOLlzkTLJSg&ab_channel=APCodingSTUDIO
 - меню для выбора круглого или прямоугольного исполнения 
 - подсветка не заполненных полей 
 

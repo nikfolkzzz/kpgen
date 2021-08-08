@@ -1,39 +1,66 @@
 import tkinter as tk 
 
+import tkinter.ttk as ttk
+
 
 class DrawMeta(tk.Frame):
     def __init__(self,parent):
         super().__init__(parent)
         self.configure(bg='blue')
-        # DRAW NUMB
-        self.draw_num_label = tk.Label(self, text = 'Номер чертежа компенсатора', bg='pink' )
-        self.draw_num_label.grid(row=0 , column=0 , sticky='e')
+        self.labels = ['номер чертежа','металл за кг ₽','ткань м^2 ₽','болты шт. ₽',]
+        self.default_values = ['21.16',700,25000,70]
+        self.meta_label = []
 
-        self.draw_num_entry = tk.Entry(self,)
-        self.draw_num_entry.grid(row=0 , column=1,sticky='w' )
 
-        # FABRIC PRICE 
-        tk.Label(self,text='цена за кв м ткани', ).grid(row=1,column=0 ,sticky='w')
 
-        self.fabric_price_entry = tk.Entry(self, textvariable='25000')
-        self.fabric_price_entry.grid(row=1,column=1)
-        # METALL PRICE 
 
-        tk.Label(self,text='цена 1 кг метала',anchor='w').grid(row=2,column=0,sticky='w')
-        self.metall_price_entry = tk.Entry(self, textvariable='25000').grid(row=2, column=1)
+        for idx , label in enumerate(self.labels): 
+            meta_label = FormUnit(self,label,self.default_values[idx])
+            meta_label.grid(row=0,column = idx)
+            self.meta_label.append(meta_label)
+        
 
-        tk.Label(self,text='цена за одим болт',anchor='w').grid(row=3,column=0,sticky='w')
-        self.bolt_price = tk.Entry(self, textvariable='25000').grid(row=3, column=1)
-
-        # SCREW PRICE
 
 
     def meta_info(self):
-        info = {'fabric_price': self.fabric_price_entry.get(),
-                'draw_number':self.draw_num_entry.get(),
-                'bolt_price': self.bolt_price_entry,
-                'metall_price': self.metall_price_entry,
-        }    
+        values = []
 
 
-        return info
+
+
+        for en in self.meta_label:
+
+            values.append(en.en_val())
+
+        draw_num, metall_price , fabric_price, bolt_price = values
+        meta_info = {
+                    'draw_num':draw_num,
+                    'metall_price':metall_price,
+                    'fabric_price':fabric_price,
+                    'bolt_price':bolt_price
+                    }
+
+        print(meta_info)
+        return meta_info
+
+
+class FormUnit(tk.Frame):
+    def __init__(self,parent,label_text ,default_value):
+        super().__init__(parent)
+        ttk.Label(self,text=label_text).grid(row=0,column=0)
+        self.en =tk.Entry(self, width=10)
+
+
+        self.en.bind('<Button-1>',self.on_click) 
+        self.en.insert(0,default_value)
+        self.en.grid(row=0,column=1)
+
+    def en_val(self):
+
+        return self.en.get()
+
+    def on_click(self,parent,e): 
+        self.en.delete(0,tk.END)
+ 
+
+

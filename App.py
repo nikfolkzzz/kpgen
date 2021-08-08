@@ -4,7 +4,7 @@ from Detail import Detail
 from DrawMeta import DrawMeta 
 import os
 from data import *
-
+from MainMenu import MainMenu
 
 
 
@@ -12,22 +12,14 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__() 
 
+        # self.tk.call('source', 'azure.tcl / azure-dark.tcl')
+        # self.ttk.Style().theme_use('azure / azure-dark')
+        self.geometry('800x600')
         self.arr = exp_type['circ']
         self.all_details = []
-        self.geometry('800x600')
-
-        self.btn_circ = tk.Button(self, text= 'cirlce' , command= lambda : self.refresh('circ'))
-        self.btn_circ.pack()
-
-        self.btn_rect = tk.Button(self, text= 'rect' , command= lambda: self.refresh('rect'))
-        self.btn_rect.pack()
-
-
         self.draw_meta = DrawMeta(self)
+
         self.draw_meta.pack(fill=tk.BOTH)
-
-
-
 
 
         self.form_canvas = tk.Canvas(self,bg='lightgreen')
@@ -49,6 +41,7 @@ class App(tk.Tk):
         self.canvas_frame = self.form_canvas.create_window((0,0), window=self.form_frame, anchor='nw',)
 
         self.put_details()
+        self.put_menu()
 #   
 # 
         self.btn = tk.Button(self, text='расчет', bg='lightblue',font=("Arial",15))
@@ -65,26 +58,34 @@ class App(tk.Tk):
 
 
 
+
+    def put_menu(self):
+        self.config(menu = MainMenu(self))
+
     def put_details(self):
-        
+
+        mp = self.draw_meta.meta_info()['metall_price']
+        fp = self.draw_meta.meta_info()['fabric_price']
+        bp = self.draw_meta.meta_info()['draw_num']
+
         for idx, d in enumerate(self.arr): 
-            detail = Detail(self.form_frame,d)
+            detail = Detail(self.form_frame,d,mp,fp,bp)
             self.all_details.append(detail)
             pos_num = divmod(idx,2)[1]
-            if pos_num==0:
-                detail.grid(row=idx, column=0,sticky='s')
+            detail.grid(row=idx, column=0,sticky='ew')
                
-            else :
-                detail.grid(row=idx-1, column=1 ,sticky='n')
+
                 
+    def quit(self):
+        self.destroy()
 
 
     def refresh(self,fej_type):
         self.arr = exp_type[fej_type]
         print(fej_type)
 
-        all_frames = [f for f in self.all_details]
-        for f_name in all_frames:
+
+        for f_name in self.all_details:
             self.nametowidget(f_name).destroy()
         self.all_details = []
         self.put_details()
@@ -109,12 +110,25 @@ class App(tk.Tk):
 
                 self.form_canvas.yview_scroll(move,"units")
 
+
+    def meta_data_returner(self):
+        metall_price = self.draw_meta.meta_info()['metall_price']
+        fabric_price = self.draw_meta.meta_info()['fabric_price']
+        bolt_price = self.draw_meta.meta_info()['draw_num']
+
+        meta_data = [metall_price,fabric_price,bolt_price]
+
+        return meta_data
+        
+
     def calc_all_forms(self,evt = None):
         # https://pypi.org/project/htmltabletomd/ - html to md 
         table_strings = []
 
-        draw_name = self.draw_meta.meta_info()
-        table_strings.append(draw_name)
+        draw_num = self.draw_meta.meta_info()['draw_num']
+
+
+        table_strings.append(draw_num)
         all_price = []
 
         for d in self.all_details: 
@@ -123,13 +137,13 @@ class App(tk.Tk):
             all_price.append(one_detail_cost)
             table_strings.append(f'{answer_string}\n')
 
-        table_strings.append(f'цена компенсатора по чертежу {draw_name} : {str(sum(all_price))}₽')
+        table_strings.append(f'цена компенсатора по чертежу {draw_num} : {str(sum(all_price))}₽')
         table_strings_formated = ''.join(table_strings)
         table = f'''
             {table_strings_formated}
         
          '''
-        with open(f'{draw_name}.txt','w', encoding='utf-8') as tb:
+        with open(f'{draw_num}.txt','w', encoding='utf-8') as tb:
             print(table, file=tb)
 
 
