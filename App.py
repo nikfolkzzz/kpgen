@@ -6,6 +6,8 @@ import os
 from data import *
 from MainMenu import MainMenu
 
+from docx import Document
+
 
 
 class App(tk.Tk):
@@ -122,7 +124,12 @@ class App(tk.Tk):
         
 
     def calc_all_forms(self,evt = None):
-        # https://pypi.org/project/htmltabletomd/ - html to md 
+
+
+
+
+
+
         table_strings = []
 
         draw_num = self.draw_meta.meta_info()['draw_num']
@@ -146,6 +153,17 @@ class App(tk.Tk):
         with open(f'{draw_num}.txt','w', encoding='utf-8') as tb:
             print(table, file=tb)
 
+        document = Document()
+        document.add_heading(f'цена по чертежу {draw_num}', 0)
+        p = document.add_paragraph(table_strings_formated)
+
+        table = document.add_table(rows = 1 , cols = 2 )
+
+
+        # p.add_run(table_strings_formated).bold = True
+        
+
+        document.save(f'{draw_num}.doc')
 
 
 
