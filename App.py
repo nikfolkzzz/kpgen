@@ -88,14 +88,13 @@ class App(tk.Tk):
 
     def refresh(self,fej_type):
         self.arr = exp_type[fej_type]
-        print(fej_type)
 
 
         for f_name in self.all_details:
             self.nametowidget(f_name).destroy()
         self.all_details = []
         self.put_details()
-        print('все детали',self.all_details)
+        print('all details',self.all_details)
 
 
 
@@ -122,42 +121,30 @@ class App(tk.Tk):
     def calc_all_forms(self,evt = None):
 
 
-
-
-
-
-        table_strings = []
-
-
-
-        table_strings.append(self.draw_num.get())
-        all_price = []
-
+        table_rows_arr = []
         for d in self.all_details: 
-            answer_string = d.func()['answer']
-            one_detail_cost = d.func()['cost']
-            all_price.append(one_detail_cost)
-            table_strings.append(f'{answer_string}\n')
+            table_rows_arr.append(d.func())
 
-        table_strings.append(f'цена компенсатора по чертежу {self.draw_num} : {str(sum(all_price))}₽')
-        table_strings_formated = ''.join(table_strings)
-        table = f'''
-            {table_strings_formated}
-        
-         '''
+        print( f'строка из таблицы {table_rows_arr}')
+            
+
  
 
-        document = Document()
-        document.add_heading(f'цена по чертежу {self.draw_num.get()}', 0)
-        p = document.add_paragraph(table_strings_formated)
 
-        table = document.add_table(rows = 1 , cols = 2 )
+
+ 
+
+        # document = Document()
+        # document.add_heading(f'цена по чертежу {self.draw_num.get()}', 0)
+        # p = document.add_paragraph()
+
+        # table = document.add_table(rows = 1 , cols = 2 )
 
 
  
         
 
-        document.save(f'{self.draw_num.get()}.doc')
+        # document.save(f'{self.draw_num.get()}.doc')
 
 
 
