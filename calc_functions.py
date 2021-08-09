@@ -8,23 +8,21 @@ from math import floor
 
 
 
-def circle_fej(arr, name , mp , bp ,fp ):
-    fabric_price = floor(int(fp))
-    metall_price = mp
-    bolt_price = bp
+def circle_fej(arr):
 
 
     diameter, flange, EH = arr
     area = diameter * 3.14 *(EH + flange)*10**-6
-    price = area * fabric_price 
+    price = area
+
 
     answer = {
 
         'cost': price,
         'answer': f'''
 
-цена тканевой части за кв м {fabric_price}
-name : {name}
+цена тканевой части за кв м 
+name : 
 площадь компенсатора - {area}
 цена  {price}
     '''

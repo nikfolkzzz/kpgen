@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.constants import VERTICAL 
 from Detail import Detail
-from DrawMeta import DrawMeta 
+
 import os
 from data import *
 from MainMenu import MainMenu
@@ -19,9 +19,15 @@ class App(tk.Tk):
         self.geometry('800x600')
         self.arr = exp_type['circ']
         self.all_details = []
-        self.draw_meta = DrawMeta(self)
 
-        self.draw_meta.pack(fill=tk.BOTH)
+        self.draw_num_label = tk.Label(self, text='номер чертежа')
+        self.draw_num = tk.Entry(self , width= 15 )
+
+        self.draw_num_label.pack(side=tk.TOP)
+        self.draw_num.pack(side=tk.TOP)
+        
+
+
 
 
         self.form_canvas = tk.Canvas(self,bg='lightgreen')
@@ -66,12 +72,10 @@ class App(tk.Tk):
 
     def put_details(self):
 
-        mp = self.draw_meta.meta_info()['metall_price']
-        fp = self.draw_meta.meta_info()['fabric_price']
-        bp = self.draw_meta.meta_info()['draw_num']
+
 
         for idx, d in enumerate(self.arr): 
-            detail = Detail(self.form_frame,d,mp,fp,bp)
+            detail = Detail(self.form_frame,d)
             self.all_details.append(detail)
             pos_num = divmod(idx,2)[1]
             detail.grid(row=idx, column=0,sticky='ew')
@@ -113,14 +117,6 @@ class App(tk.Tk):
                 self.form_canvas.yview_scroll(move,"units")
 
 
-    def meta_data_returner(self):
-        metall_price = self.draw_meta.meta_info()['metall_price']
-        fabric_price = self.draw_meta.meta_info()['fabric_price']
-        bolt_price = self.draw_meta.meta_info()['draw_num']
-
-        meta_data = [metall_price,fabric_price,bolt_price]
-
-        return meta_data
         
 
     def calc_all_forms(self,evt = None):
@@ -132,10 +128,9 @@ class App(tk.Tk):
 
         table_strings = []
 
-        draw_num = self.draw_meta.meta_info()['draw_num']
 
 
-        table_strings.append(draw_num)
+        table_strings.append(self.draw_num.get())
         all_price = []
 
         for d in self.all_details: 
@@ -144,26 +139,25 @@ class App(tk.Tk):
             all_price.append(one_detail_cost)
             table_strings.append(f'{answer_string}\n')
 
-        table_strings.append(f'цена компенсатора по чертежу {draw_num} : {str(sum(all_price))}₽')
+        table_strings.append(f'цена компенсатора по чертежу {self.draw_num} : {str(sum(all_price))}₽')
         table_strings_formated = ''.join(table_strings)
         table = f'''
             {table_strings_formated}
         
          '''
-        with open(f'{draw_num}.txt','w', encoding='utf-8') as tb:
-            print(table, file=tb)
+ 
 
         document = Document()
-        document.add_heading(f'цена по чертежу {draw_num}', 0)
+        document.add_heading(f'цена по чертежу {self.draw_num.get()}', 0)
         p = document.add_paragraph(table_strings_formated)
 
         table = document.add_table(rows = 1 , cols = 2 )
 
 
-        # p.add_run(table_strings_formated).bold = True
+ 
         
 
-        document.save(f'{draw_num}.doc')
+        document.save(f'{self.draw_num.get()}.doc')
 
 
 

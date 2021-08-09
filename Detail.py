@@ -8,11 +8,9 @@ class Detail(tk.Frame):
 
     # принимает массив с названиями параметров и названием функции. Метод func возвращает строку которую нужно будет вставить в ткп 
 
-    def __init__(self,master,arr,metall_price, fabric_price, bolt_price):
+    def __init__(self,master,arr,):
         super().__init__(master)
-        self.mp=metall_price
-        self.fp=fabric_price
-        self.bp=bolt_price
+
         self.configure(borderwidth=5, relief="groove", highlightcolor = 'pink' )
 
         self.name = arr[0]
@@ -48,7 +46,7 @@ class Detail(tk.Frame):
 
     def func(self, event = None):
         args = self.collect_calculable_args(self.widget_entrs)
-        func_answer = self.detail_function(args,self.name,self.mp,self.bp,self.fp)
+        func_answer = self.detail_function(args )
         calculated_string = func_answer['answer']
         cost = func_answer['cost']
 
