@@ -11,22 +11,36 @@ from math import floor
 def circle_fej(arr):
 
 
-    diameter, flange, EH = arr
-    area = diameter * 3.14 *(EH + flange)*10**-6
-    price = area
+    Dn, FL, EH ,BH,  qty , material = arr
+    area = Dn * 3.14 *(EH + FL)*10**-6
+    price = f'{area * 25000} ₽'
+    all_price = price * qty
+    mass = area * 10 *10**-3
 
 
-    answer = {
+    
 
-        'cost': price,
-        'answer': f'''
+    description  = f''' 
+тканевый компенсатор
+по ТУ 2343435       
+DK={Dn+FL}, EH={EH}    
+BH={BH} FL={FL}        
+вес={mass}          
 
-цена тканевой части за кв м 
-name : 
-площадь компенсатора - {area}
-цена  {price}
+
+    
+    
     '''
-    }
+
+
+
+
+
+    answer = [qty, description, price, all_price ]
+
+
+
+
 
     return answer
     
