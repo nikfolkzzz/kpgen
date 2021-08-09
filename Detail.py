@@ -47,7 +47,6 @@ class Detail(tk.Frame):
     def func(self, event = None):
         args = self.collect_calculable_args(self.widget_entrs)
         func_answer = self.detail_function(args)
-        print('answer from detail func',  func_answer)
         return func_answer
 
 

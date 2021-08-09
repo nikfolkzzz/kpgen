@@ -7,6 +7,7 @@ from data import *
 from MainMenu import MainMenu
 
 from docx import Document
+from docx.shared import Cm, Inches
 
 
 
@@ -94,7 +95,6 @@ class App(tk.Tk):
             self.nametowidget(f_name).destroy()
         self.all_details = []
         self.put_details()
-        print('all details',self.all_details)
 
 
 
@@ -125,26 +125,33 @@ class App(tk.Tk):
         for d in self.all_details: 
             table_rows_arr.append(d.func())
 
-        print( f'строка из таблицы {table_rows_arr}')
+        document = Document()
+        document.add_heading(f'{self.draw_num.get()}', 0)
+        p = document.add_paragraph()
+
+        table = document.add_table(rows = 1 , cols = 5 )
+        header_cels = table.rows[0].cells
+
+        header_cels[0].text = 'поз.'
+        header_cels[1].text = 'кол-во'
+        header_cels[2].text = 'Описание'
+        header_cels[3].text = 'цена за шт.'
+        header_cels[4].text = 'полная стоимость'
+
+        for pos, (qty, desc, solo_price, all_price) in enumerate( table_rows_arr ,1 ):
+            row_cells = table.add_row().cells
+            row_cells[0].text = str(pos)
+            row_cells[1].text = str(qty)
+            row_cells[2].text = str(desc)
+            row_cells[3].text = str(solo_price)
+            row_cells[4].text = str(all_price)
+            row_cells[2].width = Cm(6)
             
-
- 
-
-
-
- 
-
-        # document = Document()
-        # document.add_heading(f'цена по чертежу {self.draw_num.get()}', 0)
-        # p = document.add_paragraph()
-
-        # table = document.add_table(rows = 1 , cols = 2 )
-
 
  
         
 
-        # document.save(f'{self.draw_num.get()}.doc')
+        document.save(f'{self.draw_num.get()}.doc')
 
 
 
