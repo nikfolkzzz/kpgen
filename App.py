@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter.constants import VERTICAL 
 from Detail import Detail
 
@@ -17,7 +18,7 @@ class App(tk.Tk):
 
         # self.tk.call('source', 'azure.tcl / azure-dark.tcl')
         # self.ttk.Style().theme_use('azure / azure-dark')
-        self.geometry('800x600')
+        self.geometry('1200x600')
         self.arr = exp_type['circ']
         self.all_details = []
 
@@ -53,7 +54,7 @@ class App(tk.Tk):
         self.put_menu()
 #   
 # 
-        self.btn = tk.Button(self, text='расчет', bg='lightblue',font=("Arial",15))
+        self.btn = ttk.Button(self, text='расчет')
         self.btn.bind("<Button-1>", self.calc_all_forms)
         self.btn.pack(side=tk.TOP,)
 # 
@@ -126,7 +127,7 @@ class App(tk.Tk):
             table_rows_arr.append(d.func())
 
         document = Document()
-        document.add_heading(f'{self.draw_num.get()}', 0)
+        document.add_heading(f'{self.draw_num.get()}', 1)
         p = document.add_paragraph()
 
         table = document.add_table(rows = 1 , cols = 5 )
@@ -137,7 +138,7 @@ class App(tk.Tk):
         header_cels[2].text = 'Описание'
         header_cels[3].text = 'цена за шт.'
         header_cels[4].text = 'полная стоимость'
-
+        total_price  = [ ]
         for pos, (qty, desc, solo_price, all_price) in enumerate( table_rows_arr ,1 ):
             row_cells = table.add_row().cells
             row_cells[0].text = str(pos)
@@ -151,7 +152,7 @@ class App(tk.Tk):
  
         
 
-        document.save(f'{self.draw_num.get()}.doc')
+        document.save(f'C://Users//Администратор//Desktop//{self.draw_num.get()}.doc')
 
 
 

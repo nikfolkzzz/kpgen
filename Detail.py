@@ -29,19 +29,23 @@ class Detail(tk.Frame):
 
         for index, label in enumerate(self.labels):
 
-            frame = tk.Frame(self)
+            frame = tk.Frame(self, padx=10, pady=10)
             label_name =  tk.Label(frame,text=label)
-            en = tk.Entry(frame, validate='key' ,width=10 ,validatecommand = (self.register(self.validate_inp),'%P'))
+            en = tk.Entry(frame, validate='key' ,width=10 ,)
             label_name.grid(row=0,column=0)
             en.grid(row=0,column=1)
 
             frame.grid(row = 1 , column = index)
             self.widget_entrs.append(en)
 
+        
+
     def collect_calculable_args(self,arr):
         args = []
-        for item in arr:
+        for item in arr[:-1]:
             args.append(int(item.get()))
+
+        args.append(arr[len(arr)-1].get())
         return args 
 
     def func(self, event = None):
