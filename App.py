@@ -2,13 +2,17 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import VERTICAL 
 from Detail import Detail
+from NewProj import NewProj
+
+
+
 
 import os
 from data import *
 from MainMenu import MainMenu
 
 from docx import Document
-from docx.shared import Cm, Inches
+from docx.shared import Cm, Pt
 
 
 
@@ -127,8 +131,13 @@ class App(tk.Tk):
             table_rows_arr.append(d.func())
 
         document = Document()
+
+        run = document.add_paragraph().add_run()
+        font = run.font
+        font.size = Pt(8)
+
         document.add_heading(f'{self.draw_num.get()}', 1)
-        p = document.add_paragraph()
+ 
 
         table = document.add_table(rows = 1 , cols = 5 )
         header_cels = table.rows[0].cells
@@ -140,6 +149,8 @@ class App(tk.Tk):
         header_cels[4].text = 'полная стоимость'
         total_price  = [ ]
         for pos, (qty, desc, solo_price, all_price) in enumerate( table_rows_arr ,1 ):
+
+            total_price.append(all_price)
             row_cells = table.add_row().cells
             row_cells[0].text = str(pos)
             row_cells[1].text = str(qty)
@@ -149,7 +160,8 @@ class App(tk.Tk):
             row_cells[2].width = Cm(6)
             
 
- 
+        document.add_paragraph(f'полная стоимость: {str(sum(total_price))}')
+
         
 
         document.save(f'C://Users//Администратор//Desktop//{self.draw_num.get()}.doc')
@@ -160,11 +172,16 @@ class App(tk.Tk):
     def on_frame_configure(self, event=None):
       self.form_canvas.configure(scrollregion=self.form_canvas.bbox("all"))    
 
-    def run(self): 
-        self.mainloop()
+
+
+
+    def create_new_proj(self):
+        NewProj(self)
+
 
 
 
 if __name__ == "__main__":
     b = App()
+
     b.mainloop()

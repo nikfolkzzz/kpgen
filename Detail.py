@@ -35,7 +35,12 @@ class Detail(tk.Frame):
             label_name.grid(row=0,column=0)
             en.grid(row=0,column=1)
 
-            frame.grid(row = 1 , column = index)
+            if index <= 3 : 
+                frame.grid(row = 1 , column = index)
+
+            else:
+                frame.grid(row=2, column= index - 4 )
+
             self.widget_entrs.append(en)
 
         

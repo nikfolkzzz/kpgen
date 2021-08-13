@@ -11,7 +11,7 @@ class MainMenu(tk.Menu):
 
 
     self.add_cascade(label='Файл', menu = file_menu)
-    file_menu.add_command(label='Новый проект')
+    file_menu.add_command(label='Новый проект' , command= mainwindow.create_new_proj)
 
 
     self.add_cascade(label='Форма компенсатор' , menu = type_menu)
