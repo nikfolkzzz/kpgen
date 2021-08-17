@@ -42,8 +42,6 @@ def circle_fl(arr):
     размеры {Dmax}/{Dmin}
     профиль {PROFILE}
     масса {WEIGHT}
-
-
     '''
     answer = [qty, description, PRICE, ALL_PRICE ]
     return answer
@@ -105,7 +103,6 @@ def circle_def(arr):
     дефлектор - {material}
     Рзмеры Ø{Dmax}/Ø{Dmin}/ ??
     масса {m}кг
-    
     '''
 
     answer = [qty , description , PRICE , ALL_PRICE]
@@ -207,7 +204,6 @@ def rect_def(arr):
     дефлектор - {material}
     Рзмеры {Amax}x{Bmax}/{Amin}x{Bmin}/***
     масса {m}кг
-    
     '''
 
     answer = [qty , description , PRICE , ALL_PRICE]

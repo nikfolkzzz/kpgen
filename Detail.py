@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter.constants import LEFT, TRUE 
+from tkinter.constants import ANCHOR, LEFT, TRUE 
 import os 
 
 from calc_functions import *
@@ -11,10 +11,10 @@ class Detail(tk.Frame):
     def __init__(self,master,arr,):
         super().__init__(master)
 
-        self.configure(borderwidth=5, relief="groove", highlightcolor = 'pink' )
+        self.configure(borderwidth=5, relief="groove", highlightcolor = 'pink',bg='#FFA78D' )
 
         self.name = arr[0]
-        tk.Label(self,font=("Arial", 12),  text=arr[0]).grid(row=0,column=0 , columnspan = 2)
+        tk.Label(self,font=("Arial", 12), bg='#120132', fg='white', anchor='w',  text=arr[0]).grid(row=0,column=0 , columnspan = 2)
 
         self.labels = arr[1:-1]
         self.widget_entrs = []
@@ -29,11 +29,11 @@ class Detail(tk.Frame):
 
         for index, label in enumerate(self.labels):
 
-            frame = tk.Frame(self, padx=10, pady=10)
-            label_name =  tk.Label(frame,text=label)
+            frame = tk.Frame(self, padx=10, pady=10 ,bg='#FEBC8E')
+            label_name =  tk.Label(frame,text=label, bg='#5C0758' , fg='white' , anchor='w')
             en = tk.Entry(frame, validate='key' ,width=10 ,)
             label_name.grid(row=0,column=0)
-            en.grid(row=0,column=1)
+            en.grid(row=1,column=0)
 
             if index <= 3 : 
                 frame.grid(row = 1 , column = index)

@@ -12,7 +12,9 @@ from data import *
 from MainMenu import MainMenu
 
 from docx import Document
-from docx.shared import Cm, Pt
+from docx.shared import Cm, Pt ,Inches
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+# from docx.enum.table import WD_CELL_ALIGN_VERTICAL
 
 
 
@@ -20,9 +22,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__() 
 
-        # self.tk.call('source', 'azure.tcl / azure-dark.tcl')
-        # self.ttk.Style().theme_use('azure / azure-dark')
-        self.geometry('1200x600')
+        self.geometry('900x600')
         self.arr = exp_type['circ']
         self.all_details = []
 
@@ -139,7 +139,10 @@ class App(tk.Tk):
         document.add_heading(f'{self.draw_num.get()}', 1)
  
 
-        table = document.add_table(rows = 1 , cols = 5 )
+        table = document.add_table(rows = 1 , cols = 5, )
+        
+        table.alignment   = WD_ALIGN_PARAGRAPH.CENTER
+        table.allow_autofit  = True
         header_cels = table.rows[0].cells
 
         header_cels[0].text = 'поз.'
@@ -148,16 +151,24 @@ class App(tk.Tk):
         header_cels[3].text = 'цена за шт.'
         header_cels[4].text = 'полная стоимость'
         total_price  = [ ]
+
+
+
+
         for pos, (qty, desc, solo_price, all_price) in enumerate( table_rows_arr ,1 ):
 
             total_price.append(all_price)
             row_cells = table.add_row().cells
             row_cells[0].text = str(pos)
+            row_cells[0].width = Cm(1)   
             row_cells[1].text = str(qty)
+            row_cells[1].width = Cm(1)     
+            
             row_cells[2].text = str(desc)
             row_cells[3].text = str(solo_price)
             row_cells[4].text = str(all_price)
             row_cells[2].width = Cm(6)
+
             
 
         document.add_paragraph(f'полная стоимость: {str(sum(total_price))}')
